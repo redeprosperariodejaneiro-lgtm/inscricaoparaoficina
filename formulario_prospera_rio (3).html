@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscrição — Oficinas Casa Próspera</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --azul:    #092040;
+      --azul2:   #00B7D7;
+      --amarelo: #ECC203;
+      --cinza:   #EFF1F3;
+      --escuro:  #021738;
+      --branco:  #FFFFFF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cinza);
+      font-family: 'Open Sans', sans-serif;
+      color: var(--escuro);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─────────────────────────── */
+    .header {
+      background: var(--azul);
+      padding: 32px 20px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        135deg,
+        transparent,
+        transparent 40px,
+        rgba(0,183,215,.05) 40px,
+        rgba(0,183,215,.05) 41px
+      );
+    }
+    .header-logo {
+      max-width: 240px;
+      height: auto;
+      display: block;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+    .header-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--amarelo);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .header-wave {
+      display: block;
+      width: 100%;
+      height: 40px;
+      margin-bottom: -2px;
+    }
+
+    /* ─── PARCEIROS BAR ──────────────────── */
+    .parceiros-bar {
+      background: var(--branco);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 22px 24px;
+      box-shadow: 0 2px 12px rgba(9,32,64,.07);
+      border-bottom: 3px solid var(--amarelo);
+    }
+    .parceiro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 0 40px;
+    }
+    .parceiro-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9aa5b8;
+    }
+    .parceiro-logo {
+      height: 64px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      filter: none;
+      transition: opacity .2s;
+    }
+    .parceiro-logo.logo-br {
+      height: 80px;
+      max-width: 160px;
+    }
+    .parceiro-divider {
+      width: 1px;
+      height: 80px;
+      background: #e0e7ef;
+      flex-shrink: 0;
+    }
+    @media(max-width:400px){
+      .parceiro { padding: 0 20px; }
+      .parceiro-logo { height: 52px; }
+    }
+
+    /* ─── PROGRESS BAR ───────────────────── */
+    .progress-wrap {
+      background: var(--branco);
+      padding: 20px 24px 0;
+      box-shadow: 0 2px 12px rgba(9,32,64,.08);
+    }
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      height: 3px;
+      background: #dde3ec;
+      z-index: 0;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--azul2), var(--amarelo));
+      z-index: 1;
+      transition: width .5s ease;
+      width: 0%;
+    }
+    .step-dot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #dde3ec;
+      border: 3px solid #dde3ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: #9aa5b8;
+      transition: all .4s ease;
+    }
+    .step-circle.active  { background: var(--azul); border-color: var(--azul); color: var(--branco); }
+    .step-circle.done    { background: var(--azul2); border-color: var(--azul2); color: var(--branco); }
+    .step-label {
+      font-size: 9px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: #9aa5b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      max-width: 64px;
+      line-height: 1.2;
+    }
+    .step-label.active { color: var(--azul); }
+    .step-label.done   { color: var(--azul2); }
+
+    /* ─── WORKSHOP SELECTOR (step 0) ──────── */
+    .workshop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media(max-width:520px){ .workshop-grid { grid-template-columns: 1fr; } }
+    .ws-card {
+      border: 2.5px solid #dde3ec;
+      border-radius: 12px;
+      padding: 18px 16px;
+      cursor: pointer;
+      transition: all .25s;
+      background: var(--branco);
+      position: relative;
+    }
+    .ws-card:hover { border-color: var(--azul2); box-shadow: 0 4px 16px rgba(0,183,215,.15); }
+    .ws-card.selected {
+      border-color: var(--azul);
+      background: linear-gradient(135deg, #f0f5ff, var(--branco));
+      box-shadow: 0 6px 20px rgba(9,32,64,.18);
+    }
+    .ws-card input { display: none; }
+    .ws-date {
+      display: inline-block;
+      background: var(--amarelo);
+      color: var(--azul);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      letter-spacing: .5px;
+    }
+    .ws-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--azul);
+      line-height: 1.4;
+    }
+    .ws-time {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--azul2);
+      font-weight: 600;
+    }
+    .ws-check {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #ccd3df;
+      background: var(--branco);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .25s;
+    }
+    .ws-card.selected .ws-check {
+      background: var(--azul);
+      border-color: var(--azul);
+    }
+    .ws-check::after {
+      content: '✓';
+      font-size: 11px;
+      color: var(--branco);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .ws-card.selected .ws-check::after { opacity: 1; }
+
+    /* ─── TERRITÓRIO LABELS ───────────────── */
+    .territorio-label {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--azul2);
+    }
+    .territorio-nome {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--azul);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .territorio-end {
+      font-size: 11px;
+      color: #7a8a9e;
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.4;
+    }
+    .ws-date-mare {
+      background: var(--azul2) !important;
+      color: var(--branco) !important;
+    }
+
+    /* ─── FORM CONTAINER ─────────────────── */
+    .form-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .section-card {
+      background: var(--branco);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(9,32,64,.08);
+      overflow: hidden;
+      display: none;
+    }
+    .section-card.active { display: block; animation: fadeUp .4s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--azul) 0%, #1a3a6b 100%);
+      padding: 24px 28px;
+      border-left: 5px solid var(--amarelo);
+    }
+    .section-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      color: var(--amarelo);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--branco);
+      line-height: 1.3;
+    }
+    .section-desc {
+      margin-top: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,.7);
+    }
+
+    .section-body { padding: 28px; }
+
+    /* ─── FIELDS ─────────────────────────── */
+    .field-group {
+      margin-bottom: 22px;
+    }
+    label.field-label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--azul);
+      margin-bottom: 7px;
+    }
+    label.field-label .req { color: #e74c3c; margin-left: 2px; }
+
+    input[type=text], input[type=email], input[type=date], select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #dde3ec;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      color: var(--escuro);
+      background: var(--cinza);
+      outline: none;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    input[type=text]:focus, input[type=email]:focus,
+    input[type=date]:focus, select:focus {
+      border-color: var(--azul2);
+      box-shadow: 0 0 0 4px rgba(0,183,215,.12);
+      background: var(--branco);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:520px){ .field-row { grid-template-columns: 1fr; } }
+
+    /* Radio / Checkbox */
+    .radio-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .radio-grid.cols2 { grid-template-columns: 1fr 1fr; }
+    @media(max-width:520px){ .radio-grid.cols2 { grid-template-columns: 1fr; } }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 2px solid #dde3ec;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .2s;
+      background: var(--cinza);
+      font-size: 13px;
+      color: var(--escuro);
+    }
+    .radio-option:hover { border-color: var(--azul2); background: #f0fafd; }
+    .radio-option input { accent-color: var(--azul); width: 16px; height: 16px; }
+    .radio-option.checked { border-color: var(--azul); background: #eef2ff; font-weight: 600; color: var(--azul); }
+
+    /* ─── INFO BOX (seção 1) ──────────────── */
+    .info-box {
+      border-left: 4px solid var(--azul2);
+      background: #f0fafd;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+      color: var(--escuro);
+      line-height: 1.7;
+    }
+    .info-box strong { color: var(--azul); }
+    .info-item { display: flex; align-items: flex-start; gap: 10px; margin-top: 8px; }
+    .info-bullet { font-weight: 700; color: var(--azul2); flex-shrink: 0; font-size: 16px; }
+
+    /* ─── NAV BUTTONS ────────────────────── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      background: var(--cinza);
+      border-top: 1px solid #e0e7ef;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+      transition: all .25s;
+      letter-spacing: .5px;
+    }
+    .btn-back {
+      background: transparent;
+      color: var(--azul);
+      border: 2px solid var(--azul);
+    }
+    .btn-back:hover { background: var(--azul); color: var(--branco); }
+    .btn-next {
+      background: linear-gradient(135deg, var(--azul2), #007fa8);
+      color: var(--branco);
+      box-shadow: 0 4px 14px rgba(0,183,215,.35);
+    }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,183,215,.45); }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--amarelo), #c9a000);
+      color: var(--azul);
+      box-shadow: 0 4px 14px rgba(236,194,3,.35);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(236,194,3,.5); }
+
+    /* ─── SUCCESS ────────────────────────── */
+    #success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 28px;
+      background: var(--branco);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(9,32,64,.08);
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--azul2), #007fa8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      color: var(--branco);
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 24px rgba(0,183,215,.3);
+    }
+    .success-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: var(--azul);
+      margin-bottom: 12px;
+    }
+    .success-msg { font-size: 15px; color: #4a5568; line-height: 1.7; max-width: 480px; margin: 0 auto 28px; }
+    .success-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--amarelo), #c9a000);
+      color: var(--azul);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 24px;
+      border-radius: 40px;
+    }
+
+    /* ─── LOADING ────────────────────────── */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,23,56,.75);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .loading-overlay.show { display: flex; }
+    .spinner {
+      width: 56px; height: 80px;
+      border: 5px solid rgba(255,255,255,.2);
+      border-top-color: var(--azul2);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: var(--branco); font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 15px; }
+
+    /* ─── ERROR ──────────────────────────── */
+    .field-error {
+      color: #e74c3c;
+      font-size: 11.5px;
+      margin-top: 5px;
+      font-weight: 600;
+      display: none;
+    }
+    input.error, select.error { border-color: #e74c3c !important; }
+
+    /* ─── MISC ───────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--azul2), transparent);
+      margin: 22px 0;
+      opacity: .3;
+    }
+    .required-note {
+      font-size: 11px;
+      color: #9aa5b8;
+      margin-bottom: 20px;
+    }
+    .required-note span { color: #e74c3c; }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Registrando sua inscricao...</div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <img class="header-logo"
+       src="https://lh3.googleusercontent.com/d/1x5sNkC9vd7CI78y0xdkWvgoadxPEMcIf=w800"
+       alt="Prospera Rio — Logomarca"
+       onerror="this.style.display='none'"/>
+  <div class="header-sub">MARÉ · JACAREZINHO</div>
+  <svg class="header-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,0 1080,40 1440,10 L1440,40 Z" fill="#EFF1F3"/>
+  </svg>
+</div>
+
+<!-- PARCEIROS -->
+<div class="parceiros-bar">
+  <div class="parceiro">
+    <span class="parceiro-label">Realizacao</span>
+    <img src="https://lh3.googleusercontent.com/d/1DyCuL-4zpBcw56C1VuFH2iKbP8dBQ7SA"
+         alt="Instituto BR"
+         class="parceiro-logo logo-br"
+         onerror="this.style.display='none'"/>
+  </div>
+  <div class="parceiro-divider"></div>
+  <div class="parceiro">
+    <span class="parceiro-label">Patrocinador</span>
+    <img src="https://lh3.googleusercontent.com/d/1ndv92HPv1FLGdUGzKI75FB7WunKrSaQW"
+         alt="Sebrae"
+         class="parceiro-logo"
+         onerror="this.style.display='none'"/>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-steps" id="progressSteps">
+    <div class="progress-fill" id="progressFill"></div>
+    <!-- dots injected by JS -->
+  </div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+
+  <!-- ── STEP 0: Escolha a Oficina ───────────────── -->
+  <div class="section-card active" id="step-0">
+    <div class="section-header">
+      <div class="section-tag">Passo 1 de 6</div>
+      <div class="section-title">Escolha a Oficina</div>
+      <div class="section-desc">Selecione a palestra em que deseja se inscrever</div>
+    </div>
+    <div class="section-body">
+      <p class="required-note">Selecione o território e a palestra de sua preferência. Campos com <span>*</span> são obrigatórios.</p>
+
+      <!-- JACAREZINHO -->
+      <div class="territorio-label">
+        <span class="territorio-nome">Jacarezinho</span>
+        <span class="territorio-end">Rua Amaro Rangel, 49 — Entrada gratuita — Vagas limitadas</span>
+      </div>
+      <div class="workshop-grid">
+        <label class="ws-card" id="ws0">
+          <input type="radio" name="oficina" value="Precificação Estratégica" data-date="04/03/2026" data-time="14h" data-local="Jacarezinho" data-address="Rua Amaro Rangel, 49 — Jacarezinho"/>
+          <div class="ws-check"></div>
+          <div class="ws-date">04 MAR · 14h</div>
+          <div class="ws-title">Precificação Estratégica: Nunca Mais Venda no Prejuízo</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws1">
+          <input type="radio" name="oficina" value="Marketing de Conteúdo" data-date="04/03/2026" data-time="16h" data-local="Jacarezinho" data-address="Rua Amaro Rangel, 49 — Jacarezinho"/>
+          <div class="ws-check"></div>
+          <div class="ws-date">04 MAR · 16h</div>
+          <div class="ws-title">Marketing de Conteúdo Para Pequenos Negócios</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws2">
+          <input type="radio" name="oficina" value="Atendimento ao Cliente" data-date="11/03/2026" data-time="14h" data-local="Jacarezinho" data-address="Rua Amaro Rangel, 49 — Jacarezinho"/>
+          <div class="ws-check"></div>
+          <div class="ws-date">11 MAR · 14h</div>
+          <div class="ws-title">Atendimento ao Cliente que Fideliza e Gera Indicações</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws3">
+          <input type="radio" name="oficina" value="Promoções nas Redes Sociais" data-date="11/03/2026" data-time="16h" data-local="Jacarezinho" data-address="Rua Amaro Rangel, 49 — Jacarezinho"/>
+          <div class="ws-check"></div>
+          <div class="ws-date">11 MAR · 16h</div>
+          <div class="ws-title">Como Criar Promoções que Funcionam nas Redes Sociais</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+      </div>
+
+      <!-- MARÉ -->
+      <div class="territorio-label" style="margin-top:28px;">
+        <span class="territorio-nome">Maré</span>
+        <span class="territorio-end">Rua Teixeira Ribeiro, 527 — Em cima do Moto Taxi — Entrada gratuita — Vagas limitadas</span>
+      </div>
+      <div class="workshop-grid">
+        <label class="ws-card" id="ws4">
+          <input type="radio" name="oficina" value="Precificação Estratégica" data-date="05/03/2026" data-time="14h" data-local="Maré" data-address="Rua Teixeira Ribeiro, 527 — Maré (em cima do Moto Taxi)"/>
+          <div class="ws-check"></div>
+          <div class="ws-date ws-date-mare">05 MAR · 14h</div>
+          <div class="ws-title">Precificação Estratégica: Nunca Mais Venda no Prejuízo</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws5">
+          <input type="radio" name="oficina" value="Marketing de Conteúdo" data-date="05/03/2026" data-time="16h" data-local="Maré" data-address="Rua Teixeira Ribeiro, 527 — Maré (em cima do Moto Taxi)"/>
+          <div class="ws-check"></div>
+          <div class="ws-date ws-date-mare">05 MAR · 16h</div>
+          <div class="ws-title">Marketing de Conteúdo Para Pequenos Negócios</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws6">
+          <input type="radio" name="oficina" value="Atendimento ao Cliente" data-date="12/03/2026" data-time="14h" data-local="Maré" data-address="Rua Teixeira Ribeiro, 527 — Maré (em cima do Moto Taxi)"/>
+          <div class="ws-check"></div>
+          <div class="ws-date ws-date-mare">12 MAR · 14h</div>
+          <div class="ws-title">Atendimento ao Cliente que Fideliza e Gera Indicações</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+        <label class="ws-card" id="ws7">
+          <input type="radio" name="oficina" value="Promoções nas Redes Sociais" data-date="12/03/2026" data-time="16h" data-local="Maré" data-address="Rua Teixeira Ribeiro, 527 — Maré (em cima do Moto Taxi)"/>
+          <div class="ws-check"></div>
+          <div class="ws-date ws-date-mare">12 MAR · 16h</div>
+          <div class="ws-title">Como Criar Promoções que Funcionam nas Redes Sociais</div>
+          <div class="ws-time">Duração: aproximadamente 2 horas</div>
+        </label>
+      </div>
+    </div>
+    <div class="nav-buttons" style="justify-content:flex-end">
+      <button class="btn btn-next" onclick="goTo(1)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: Dados Pessoais ───────────────────── -->
+  <div class="section-card" id="step-1">
+    <div class="section-header">
+      <div class="section-tag">Passo 2 de 6</div>
+      <div class="section-title">Dados Pessoais</div>
+      <div class="section-desc">Utilizados para emissão do certificado de participação</div>
+    </div>
+    <div class="section-body">
+      <p class="required-note">Campos com <span>*</span> são obrigatórios</p>
+
+      <div class="field-group">
+        <label class="field-label">Nome completo <span class="req">*</span></label>
+        <input type="text" id="nome" placeholder="Seu nome completo"/>
+        <div class="field-error" id="err-nome">Por favor, informe seu nome completo.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">CPF <span class="req">*</span></label>
+          <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"/>
+          <div class="field-error" id="err-cpf">CPF inválido.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Data de nascimento <span class="req">*</span></label>
+          <input type="date" id="nascimento"/>
+          <div class="field-error" id="err-nasc">Informe a data de nascimento.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Sexo <span class="req">*</span></label>
+        <div class="radio-grid cols2">
+          <label class="radio-option"><input type="radio" name="sexo" value="Feminino"/> Feminino</label>
+          <label class="radio-option"><input type="radio" name="sexo" value="Masculino"/> Masculino</label>
+          <label class="radio-option"><input type="radio" name="sexo" value="Prefiro não informar"/> Prefiro não informar</label>
+        </div>
+        <div class="field-error" id="err-sexo">Selecione uma opção.</div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-back" onclick="goTo(0)">← Voltar</button>
+      <button class="btn btn-next" onclick="goTo(2)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Endereço ─────────────────────────── -->
+  <div class="section-card" id="step-2">
+    <div class="section-header">
+      <div class="section-tag">Passo 3 de 6</div>
+      <div class="section-title">Endereço</div>
+      <div class="section-desc">Estamos mapeando onde moram nossos empreendedores</div>
+    </div>
+    <div class="section-body">
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Tipo de logradouro <span class="req">*</span></label>
+          <select id="tipoLogradouro">
+            <option value="">Selecione…</option>
+            <option>Rua</option><option>Avenida</option><option>Travessa</option>
+            <option>Beco</option><option>Praça</option><option>Outro</option>
+          </select>
+          <div class="field-error" id="err-tipo">Selecione o tipo.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Logradouro <span class="req">*</span></label>
+          <input type="text" id="logradouro" placeholder="Nome da rua/avenida"/>
+          <div class="field-error" id="err-logr">Informe o logradouro.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Número <span class="req">*</span></label>
+          <input type="text" id="numero" placeholder="Ex: 123"/>
+          <div class="field-error" id="err-num">Informe o número.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Complemento</label>
+          <input type="text" id="complemento" placeholder="Apto, bloco… (opcional)"/>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Bairro <span class="req">*</span></label>
+          <input type="text" id="bairro" placeholder="Seu bairro"/>
+          <div class="field-error" id="err-bairro">Informe o bairro.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">CEP <span class="req">*</span></label>
+          <input type="text" id="cep" placeholder="00000-000" maxlength="9"/>
+          <div class="field-error" id="err-cep">CEP inválido.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Município</label>
+          <input type="text" id="municipio" value="Rio de Janeiro" readonly style="opacity:.7"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">UF</label>
+          <input type="text" id="uf" value="RJ" readonly style="opacity:.7"/>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-back" onclick="goTo(1)">← Voltar</button>
+      <button class="btn btn-next" onclick="goTo(3)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Contato ──────────────────────────── -->
+  <div class="section-card" id="step-3">
+    <div class="section-header">
+      <div class="section-tag">Passo 4 de 6</div>
+      <div class="section-title">Contato</div>
+      <div class="section-desc">Para confirmação da vaga e envio do certificado</div>
+    </div>
+    <div class="section-body">
+      <div class="field-group">
+        <label class="field-label">Telefone / WhatsApp <span class="req">*</span></label>
+        <input type="text" id="telefone" placeholder="(21) 99999-9999" maxlength="15"/>
+        <div class="field-error" id="err-tel">Informe um telefone válido.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">E-mail <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="seuemail@exemplo.com"/>
+        <div class="field-error" id="err-email">Informe um e-mail válido.</div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-back" onclick="goTo(2)">← Voltar</button>
+      <button class="btn btn-next" onclick="goTo(4)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: Perfil Temático (dinâmico) ──────── -->
+  <div class="section-card" id="step-4">
+    <div class="section-header">
+      <div class="section-tag">Passo 5 de 6</div>
+      <div class="section-title">Perfil Digital</div>
+      <div class="section-desc" id="perfilDesc">Ajude-nos a preparar a oficina para a sua realidade</div>
+    </div>
+    <div class="section-body" id="perfilBody">
+      <!-- Preenchido dinamicamente -->
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-back" onclick="goTo(3)">← Voltar</button>
+      <button class="btn btn-next" onclick="goTo(5)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 5: Autorização ──────────────────────── -->
+  <div class="section-card" id="step-5">
+    <div class="section-header">
+      <div class="section-tag">Passo 6 de 6</div>
+      <div class="section-title">Autorização</div>
+      <div class="section-desc">Quase lá! Revise e conclua sua inscrição</div>
+    </div>
+    <div class="section-body">
+      <div class="info-box">
+        <strong>Uso dos dados</strong><br/>
+        Os dados coletados serão utilizados exclusivamente para:<br/>
+        <div class="info-item"><span class="info-bullet">—</span> Confirmar sua inscrição por WhatsApp e e-mail</div>
+        <div class="info-item"><span class="info-bullet">—</span> Emitir o certificado de participação</div>
+        <div class="info-item"><span class="info-bullet">—</span> Registrar sua presença no Projeto Casa Próspera</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Autorizo o uso dos meus dados conforme descrito acima <span class="req">*</span></label>
+        <div class="radio-grid">
+          <label class="radio-option"><input type="radio" name="lgpd" value="Sim, autorizo"/> Sim, autorizo</label>
+        </div>
+        <div class="field-error" id="err-lgpd">Você precisa autorizar para concluir a inscrição.</div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="field-group">
+        <label class="field-label">Deseja receber informações sobre outras oficinas gratuitas da Casa Próspera?</label>
+        <div class="radio-grid">
+          <label class="radio-option"><input type="radio" name="comunicacao" value="Sim, quero saber de outras oficinas"/> Sim, quero saber de outras oficinas</label>
+          <label class="radio-option"><input type="radio" name="comunicacao" value="Não, apenas esta"/> Não, apenas esta</label>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-back" onclick="goTo(4)">← Voltar</button>
+      <button class="btn btn-submit" onclick="submitForm()">Confirmar Inscricao</button>
+    </div>
+  </div>
+
+  <!-- ── SUCCESS ──────────────────────────────────── -->
+  <div id="success-screen">
+    <div class="success-icon">+</div>
+    <div class="success-title">Inscricao Confirmada!</div>
+    <div class="success-msg">
+      Sua inscricao foi registrada com sucesso.<br/>
+      Em breve voce recebera uma confirmacao no WhatsApp e no e-mail informados.<br/>
+      <strong>Nao se esqueca de trazer o celular carregado!</strong>
+    </div>
+    <div class="success-badge" id="successBadge">04/03 · 14h — Precificacao Estrategica</div>
+  </div>
+
+</div><!-- /form-wrap -->
+
+<script>
+  // ─── CONFIG ──────────────────────────────────────────────────────────────
+  // ⚠️ Substitua pela URL do seu Apps Script publicado como Web App
+  const APPS_SCRIPT_URL = 'COLE_AQUI_SUA_URL_DO_APPS_SCRIPT';
+
+  const STEP_LABELS = ['Oficina','Dados','Endereço','Contato','Perfil','Autorização'];
+  let currentStep = 0;
+
+  // ─── PROGRESS BAR ────────────────────────────────────────────────────────
+  const stepsContainer = document.getElementById('progressSteps');
+  const fillEl = document.getElementById('progressFill');
+
+  STEP_LABELS.forEach((label, i) => {
+    const div = document.createElement('div');
+    div.className = 'step-dot';
+    div.id = `dot-${i}`;
+    div.innerHTML = `
+      <div class="step-circle" id="circle-${i}">${i+1}</div>
+      <div class="step-label" id="label-${i}">${label}</div>`;
+    stepsContainer.appendChild(div);
+  });
+  updateProgress(0);
+
+  function updateProgress(step) {
+    STEP_LABELS.forEach((_, i) => {
+      const circle = document.getElementById(`circle-${i}`);
+      const label  = document.getElementById(`label-${i}`);
+      circle.className = 'step-circle' + (i < step ? ' done' : i === step ? ' active' : '');
+      label.className  = 'step-label'  + (i < step ? ' done' : i === step ? ' active' : '');
+      if (i < step) circle.textContent = '✓';
+      else circle.textContent = i + 1;
+    });
+    const pct = step === 0 ? 0 : (step / (STEP_LABELS.length - 1)) * 100;
+    fillEl.style.width = pct + '%';
+  }
+
+  // ─── WORKSHOP CARDS ───────────────────────────────────────────────────────
+  document.querySelectorAll('.ws-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.ws-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      card.querySelector('input').checked = true;
+    });
+  });
+
+  // ─── PERFIL QUESTIONS ─────────────────────────────────────────────────────
+  const PERGUNTAS = {
+    'Precificação Estratégica': [
+      { id:'p1', q:'Como você define o preço hoje?', opts:['Olho a concorrência e cobro igual ou menos','Calculo o custo e coloco margem','Cobro o que o cliente topou','Não sei direito como precificar','Nunca pensei nisso'] },
+      { id:'p2', q:'Você sabe seu custo real por produto/serviço?', opts:['Sim, tenho controle detalhado','Mais ou menos, conheço alguns custos','Não, não tenho esse controle'] },
+      { id:'p3', q:'Já vendeu no prejuízo sem perceber?', opts:['Sim, várias vezes','Acho que sim, mas não tenho certeza','Não, tenho controle','Nunca pensei nisso'] },
+      { id:'p4', q:'Maior dificuldade com preço?', opts:['Medo de cobrar caro e perder clientes','Não saber calcular custo total','Concorrência com preço muito baixo','Clientes que pedem desconto sempre','Não saber o valor da minha hora'] },
+      { id:'p5', q:'Que tipo de negócio você tem ou quer ter?', opts:['Produtos (roupas, acessórios, beleza…)','Serviços (cabeleireiro, manicure, costureira…)','Comida (doces, salgados, marmita…)','Ainda estou começando'] },
+      { id:'p6', q:'Objetivo principal com esta oficina?', opts:['Aprender a calcular o preço certo','Parar de vender no prejuízo','Entender minha margem de lucro','Ter coragem de aumentar meu preço','Todos os acima'] },
+    ],
+    'Marketing de Conteúdo': [
+      { id:'p1', q:'Você já usa rede social para divulgar seu negócio?', opts:['Sim, uso o Instagram','Sim, uso o Facebook','Sim, uso o TikTok','Uso só o WhatsApp','Ainda não divulgo nada online'] },
+      { id:'p2', q:'Com que frequência você posta conteúdo?', opts:['Todos os dias','Algumas vezes por semana','Uma vez por semana ou menos','Quase nunca','Nunca posto'] },
+      { id:'p3', q:'Maior dificuldade com conteúdo?', opts:['Não sei o que postar','Não tenho tempo','Não me sinto confortável na câmera','Posto mas não gero vendas','Não sei usar as ferramentas (Canva, Reels…)'] },
+      { id:'p4', q:'Algum post já trouxe cliente ou venda?', opts:['Sim, várias vezes','Sim, uma ou duas vezes','Nunca','Não lembro'] },
+      { id:'p5', q:'Que tipo de negócio você tem ou quer ter?', opts:['Produtos (roupas, acessórios, beleza…)','Serviços (cabeleireiro, manicure, costureira…)','Comida (doces, salgados, marmita…)','Ainda estou começando'] },
+      { id:'p6', q:'Objetivo principal com esta oficina?', opts:['Aprender o que postar para vender mais','Criar um calendário de conteúdo','Entender como o algoritmo funciona','Aprender a fazer artes e vídeos simples','Todos os acima'] },
+    ],
+    'Atendimento ao Cliente': [
+      { id:'p1', q:'Como você avalia seu atendimento hoje?', opts:['Excelente, recebo muitos elogios','Bom, mas posso melhorar','Regular, ainda tenho problemas','Ruim, perco clientes por isso','Nunca pensei nisso'] },
+      { id:'p2', q:'Você recebe indicações de clientes com frequência?', opts:['Sim, a maioria vem por indicação','Às vezes','Raramente','Nunca recebi indicação'] },
+      { id:'p3', q:'Maior dificuldade no atendimento?', opts:['Clientes que reclamam e não voltam','Demora para responder mensagens','Não saber lidar com clientes difíceis','Não saber se o cliente ficou satisfeito','Perder clientes para a concorrência'] },
+      { id:'p4', q:'Você tem processo para fidelizar clientes?', opts:['Sim, envio mensagens, promoções, etc.','Faço alguns contatos mas sem estratégia','Não, espero o cliente voltar sozinho','Nunca pensei nisso'] },
+      { id:'p5', q:'Que tipo de negócio você tem ou quer ter?', opts:['Produtos (roupas, acessórios, beleza…)','Serviços (cabeleireiro, manicure, costureira…)','Comida (doces, salgados, marmita…)','Ainda estou começando'] },
+      { id:'p6', q:'Objetivo principal com esta oficina?', opts:['Aprender a fidelizar clientes','Melhorar atendimento no WhatsApp','Gerar mais indicações','Saber lidar com reclamações','Todos os acima'] },
+    ],
+    'Promoções nas Redes Sociais': [
+      { id:'p1', q:'Você já fez alguma promoção no seu negócio?', opts:['Sim, faço com frequência','Já tentei algumas vezes','Uma vez ou outra, sem planejamento','Nunca fiz promoção'] },
+      { id:'p2', q:'Onde você divulga suas promoções?', opts:['Só no WhatsApp','Instagram ou Facebook','TikTok','Panfleto ou boca a boca','Ainda não divulgo promoções'] },
+      { id:'p3', q:'Maior dificuldade com promoções?', opts:['Não saber criar promoção que vende','Dar desconto e perder dinheiro','Não saber divulgar nas redes','Clientes que só compram em promoção','Nunca pensei em como fazer promoções'] },
+      { id:'p4', q:'Uma promoção já gerou resultado?', opts:['Sim, vendi muito mais','Sim, mas não sei se valeu financeiramente','Não, não funcionou','Ainda não fiz promoção'] },
+      { id:'p5', q:'Que tipo de negócio você tem ou quer ter?', opts:['Produtos (roupas, acessórios, beleza…)','Serviços (cabeleireiro, manicure, costureira…)','Comida (doces, salgados, marmita…)','Ainda estou começando'] },
+      { id:'p6', q:'Objetivo principal com esta oficina?', opts:['Criar promoções que aumentam vendas sem prejudicar lucro','Aprender a divulgar nas redes sociais','Entender quais tipos funcionam para meu negócio','Criar um calendário de promoções','Todos os acima'] },
+    ],
+  };
+
+  function renderPerfil(oficina) {
+    const body = document.getElementById('perfilBody');
+    const perguntas = PERGUNTAS[oficina] || PERGUNTAS['Precificação Estratégica'];
+    body.innerHTML = '<p class="required-note">Campos com <span style="color:#e74c3c">*</span> são obrigatórios</p>';
+    perguntas.forEach((p, idx) => {
+      const div = document.createElement('div');
+      div.className = 'field-group';
+      div.innerHTML = `
+        <label class="field-label">${p.q} <span class="req">*</span></label>
+        <div class="radio-grid">
+          ${p.opts.map(o => `<label class="radio-option"><input type="radio" name="${p.id}" value="${o}"/> ${o}</label>`).join('')}
+        </div>
+        <div class="field-error" id="err-${p.id}">Selecione uma opção.</div>`;
+      body.appendChild(div);
+    });
+    // Radio styling
+    body.querySelectorAll('.radio-option input').forEach(inp => {
+      inp.addEventListener('change', () => {
+        body.querySelectorAll(`.radio-option input[name="${inp.name}"]`).forEach(i => {
+          i.closest('.radio-option').classList.toggle('checked', i.checked);
+        });
+      });
+    });
+  }
+
+  // ─── NAVIGATION ──────────────────────────────────────────────────────────
+  function goTo(step) {
+    if (step > currentStep && !validate(currentStep)) return;
+    if (step === 4) {
+      const oficina = getSelectedOficina();
+      if (oficina) renderPerfil(oficina);
+    }
+    document.getElementById(`step-${currentStep}`).classList.remove('active');
+    currentStep = step;
+    document.getElementById(`step-${currentStep}`).classList.add('active');
+    updateProgress(currentStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function getSelectedOficina() {
+    const r = document.querySelector('input[name="oficina"]:checked');
+    return r ? r.value : null;
+  }
+
+  // ─── VALIDATION ───────────────────────────────────────────────────────────
+  function showErr(id, show) {
+    const el = document.getElementById('err-' + id);
+    if (el) el.style.display = show ? 'block' : 'none';
+  }
+  function clearErrors() {
+    document.querySelectorAll('.field-error').forEach(e => e.style.display = 'none');
+    document.querySelectorAll('input.error, select.error').forEach(e => e.classList.remove('error'));
+  }
+
+  function validate(step) {
+    clearErrors();
+    let ok = true;
+    const req = (id, condition) => { if (!condition) { showErr(id, true); ok = false; } };
+
+    if (step === 0) {
+      if (!getSelectedOficina()) {
+        alert('Por favor, selecione uma oficina para continuar.');
+        ok = false;
+      }
+    }
+    if (step === 1) {
+      const nome = document.getElementById('nome').value.trim();
+      const cpf  = document.getElementById('cpf').value.trim();
+      const nasc = document.getElementById('nascimento').value;
+      const sexo = document.querySelector('input[name="sexo"]:checked');
+      req('nome', nome.length >= 3);
+      req('cpf',  cpf.replace(/\D/g,'').length === 11);
+      req('nasc', !!nasc);
+      req('sexo', !!sexo);
+    }
+    if (step === 2) {
+      req('tipo',   !!document.getElementById('tipoLogradouro').value);
+      req('logr',   document.getElementById('logradouro').value.trim().length > 0);
+      req('num',    document.getElementById('numero').value.trim().length > 0);
+      req('bairro', document.getElementById('bairro').value.trim().length > 0);
+      req('cep',    document.getElementById('cep').value.replace(/\D/g,'').length === 8);
+    }
+    if (step === 3) {
+      req('tel',   document.getElementById('telefone').value.replace(/\D/g,'').length >= 10);
+      const emailVal = document.getElementById('email').value.trim();
+      req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal));
+    }
+    if (step === 4) {
+      const pqs = Object.keys(PERGUNTAS)[0]; // any set has 6 questions p1..p6
+      for (let i = 1; i <= 6; i++) {
+        const id = `p${i}`;
+        const sel = document.querySelector(`input[name="${id}"]:checked`);
+        req(id, !!sel);
+      }
+    }
+    if (step === 5) {
+      req('lgpd', !!document.querySelector('input[name="lgpd"]:checked'));
+    }
+    return ok;
+  }
+
+  // ─── CPF MASK ─────────────────────────────────────────────────────────────
+  document.getElementById('cpf').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,11);
+    if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,'$1.$2.$3-$4');
+    else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/,'$1.$2.$3');
+    else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/,'$1.$2');
+    this.value = v;
+  });
+  document.getElementById('cep').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,8);
+    if (v.length > 5) v = v.replace(/(\d{5})(\d{1,3})/,'$1-$2');
+    this.value = v;
+  });
+  document.getElementById('telefone').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,11);
+    if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3');
+    else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3');
+    else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/,'($1) $2');
+    this.value = v;
+  });
+
+  // Radio hover style
+  document.addEventListener('change', e => {
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.closest('.radio-option')?.classList.toggle('checked', i.checked);
+      });
+    }
+  });
+
+  // ─── SUBMIT ───────────────────────────────────────────────────────────────
+  async function submitForm() {
+    if (!validate(5)) return;
+
+    const oficina = getSelectedOficina();
+    const ofInput = document.querySelector('input[name="oficina"]:checked');
+
+    const perfilRespostas = {};
+    for (let i = 1; i <= 6; i++) {
+      const sel = document.querySelector(`input[name="p${i}"]:checked`);
+      perfilRespostas[`perfil_p${i}`] = sel ? sel.value : '';
+    }
+
+    const payload = {
+      oficina,
+      local:         ofInput?.dataset.local || '',
+      endereco:      ofInput?.dataset.address || '',
+      data_palestra: ofInput?.dataset.date || '',
+      hora_palestra: ofInput?.dataset.time || '',
+      nome:          document.getElementById('nome').value.trim(),
+      cpf:           document.getElementById('cpf').value.trim(),
+      nascimento:    document.getElementById('nascimento').value,
+      sexo:          document.querySelector('input[name="sexo"]:checked')?.value || '',
+      tipo_logradouro: document.getElementById('tipoLogradouro').value,
+      logradouro:    document.getElementById('logradouro').value.trim(),
+      numero:        document.getElementById('numero').value.trim(),
+      complemento:   document.getElementById('complemento').value.trim(),
+      bairro:        document.getElementById('bairro').value.trim(),
+      municipio:     'Rio de Janeiro',
+      uf:            'RJ',
+      cep:           document.getElementById('cep').value.trim(),
+      telefone:      document.getElementById('telefone').value.trim(),
+      email:         document.getElementById('email').value.trim(),
+      lgpd:          document.querySelector('input[name="lgpd"]:checked')?.value || '',
+      comunicacao:   document.querySelector('input[name="comunicacao"]:checked')?.value || '',
+      timestamp:     new Date().toLocaleString('pt-BR'),
+      ...perfilRespostas
+    };
+
+    document.getElementById('loadingOverlay').classList.add('show');
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      // no-cors means we can't read the response — assume success
+      showSuccess(oficina, ofInput);
+    } catch (err) {
+      document.getElementById('loadingOverlay').classList.remove('show');
+      alert('Erro de conexão. Verifique sua internet e tente novamente.');
+    }
+  }
+
+  function showSuccess(oficina, ofInput) {
+    document.getElementById('loadingOverlay').classList.remove('show');
+    document.getElementById(`step-${currentStep}`).classList.remove('active');
+    document.getElementById('success-screen').style.display = 'block';
+    const local = ofInput?.dataset.local || '';
+    document.getElementById('successBadge').textContent =
+      `${ofInput?.dataset.date || ''} · ${ofInput?.dataset.time || ''} — ${oficina} — ${local}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
