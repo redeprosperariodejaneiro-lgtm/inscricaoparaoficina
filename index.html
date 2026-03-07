@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Inscrição — Oficinas Casa Prospera</title>
+  <title>Inscrição — Oficinas Casa Próspera</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -571,7 +571,7 @@
 <!-- PARCEIROS -->
 <div class="parceiros-bar">
   <div class="parceiro">
-    <span class="parceiro-label">Realização</span>
+    <span class="parceiro-label">Realizacao</span>
     <img src="https://lh3.googleusercontent.com/d/1DyCuL-4zpBcw56C1VuFH2iKbP8dBQ7SA"
          alt="Instituto BR"
          class="parceiro-logo logo-br"
@@ -852,7 +852,7 @@
         Os dados coletados serão utilizados exclusivamente para:<br/>
         <div class="info-item"><span class="info-bullet">—</span> Confirmar sua inscrição por WhatsApp e e-mail</div>
         <div class="info-item"><span class="info-bullet">—</span> Emitir o certificado de participação</div>
-        <div class="info-item"><span class="info-bullet">—</span> Registrar sua presença no Projeto Casa Prospera</div>
+        <div class="info-item"><span class="info-bullet">—</span> Registrar sua presença no Projeto Casa Próspera</div>
       </div>
 
       <div class="field-group">
@@ -866,7 +866,7 @@
       <div class="section-divider"></div>
 
       <div class="field-group">
-        <label class="field-label">Deseja receber informações sobre outras oficinas gratuitas da Casa Prospera?</label>
+        <label class="field-label">Deseja receber informações sobre outras oficinas gratuitas da Casa Próspera?</label>
         <div class="radio-grid">
           <label class="radio-option"><input type="radio" name="comunicacao" value="Sim, quero saber de outras oficinas"/> Sim, quero saber de outras oficinas</label>
           <label class="radio-option"><input type="radio" name="comunicacao" value="Não, apenas esta"/> Não, apenas esta</label>
@@ -875,20 +875,20 @@
     </div>
     <div class="nav-buttons">
       <button class="btn btn-back" onclick="goTo(4)">← Voltar</button>
-      <button class="btn btn-submit" onclick="submitForm()">Confirmar Inscrição</button>
+      <button class="btn btn-submit" onclick="submitForm()">Confirmar Inscricao</button>
     </div>
   </div>
 
   <!-- ── SUCCESS ──────────────────────────────────── -->
   <div id="success-screen">
     <div class="success-icon">+</div>
-    <div class="success-title">Inscrição Confirmada!</div>
+    <div class="success-title">Inscricao Confirmada!</div>
     <div class="success-msg">
       Sua inscricao foi registrada com sucesso.<br/>
-      Em breve voce receberá uma confirmação no WhatsApp e no e-mail informados.<br/>
-      <strong>Não se esqueça de trazer o celular carregado!</strong>
+      Em breve voce recebera uma confirmacao no WhatsApp e no e-mail informados.<br/>
+      <strong>Nao se esqueca de trazer o celular carregado!</strong>
     </div>
-    <div class="success-badge" id="successBadge">04/03 · 14h — Precificação Estrategica</div>
+    <div class="success-badge" id="successBadge">04/03 · 14h — Precificacao Estrategica</div>
   </div>
 
 </div><!-- /form-wrap -->
@@ -896,7 +896,7 @@
 <script>
   // ─── CONFIG ──────────────────────────────────────────────────────────────
   // ⚠️ Substitua pela URL do seu Apps Script publicado como Web App
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxb8_RfYhlKkleM3l_130upBadYXlcQ050EpiBx-eGWIUuLgNfW_jKutBGE6toeAmcGAQ/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqA8fHmGX2U5RfoqXP3-KQU1pt-U3x56f6dUdn-Wyvb27_Dd1Xt_Iv1tulurUDyTkJ/exec';
 
   const STEP_LABELS = ['Oficina','Dados','Endereço','Contato','Perfil','Autorização'];
   let currentStep = 0;
@@ -1121,44 +1121,50 @@
 
     const payload = {
       oficina,
-      local:         ofInput?.dataset.local || '',
-      endereco:      ofInput?.dataset.address || '',
-      data_palestra: ofInput?.dataset.date || '',
-      hora_palestra: ofInput?.dataset.time || '',
-      nome:          document.getElementById('nome').value.trim(),
-      cpf:           document.getElementById('cpf').value.trim(),
-      nascimento:    document.getElementById('nascimento').value,
-      sexo:          document.querySelector('input[name="sexo"]:checked')?.value || '',
+      local:           ofInput?.dataset.local    || '',
+      endereco:        ofInput?.dataset.address  || '',
+      data_palestra:   ofInput?.dataset.date     || '',
+      hora_palestra:   ofInput?.dataset.time     || '',
+      nome:            document.getElementById('nome').value.trim(),
+      cpf:             document.getElementById('cpf').value.trim(),
+      nascimento:      document.getElementById('nascimento').value,
+      sexo:            document.querySelector('input[name="sexo"]:checked')?.value || '',
       tipo_logradouro: document.getElementById('tipoLogradouro').value,
-      logradouro:    document.getElementById('logradouro').value.trim(),
-      numero:        document.getElementById('numero').value.trim(),
-      complemento:   document.getElementById('complemento').value.trim(),
-      bairro:        document.getElementById('bairro').value.trim(),
-      municipio:     'Rio de Janeiro',
-      uf:            'RJ',
-      cep:           document.getElementById('cep').value.trim(),
-      telefone:      document.getElementById('telefone').value.trim(),
-      email:         document.getElementById('email').value.trim(),
-      lgpd:          document.querySelector('input[name="lgpd"]:checked')?.value || '',
-      comunicacao:   document.querySelector('input[name="comunicacao"]:checked')?.value || '',
-      timestamp:     new Date().toLocaleString('pt-BR'),
+      logradouro:      document.getElementById('logradouro').value.trim(),
+      numero:          document.getElementById('numero').value.trim(),
+      complemento:     document.getElementById('complemento').value.trim(),
+      bairro:          document.getElementById('bairro').value.trim(),
+      municipio:       'Rio de Janeiro',
+      uf:              'RJ',
+      cep:             document.getElementById('cep').value.trim(),
+      telefone:        document.getElementById('telefone').value.trim(),
+      email:           document.getElementById('email').value.trim(),
+      lgpd:            document.querySelector('input[name="lgpd"]:checked')?.value || '',
+      comunicacao:     document.querySelector('input[name="comunicacao"]:checked')?.value || '',
+      timestamp:       new Date().toLocaleString('pt-BR'),
       ...perfilRespostas
     };
 
     document.getElementById('loadingOverlay').classList.add('show');
 
+    // ── Usar URLSearchParams (application/x-www-form-urlencoded)
+    // Este é o único método que funciona de forma confiável com
+    // mode: 'no-cors' para o Google Apps Script.
+    // JSON com no-cors faz o browser bloquear o corpo da requisição silenciosamente.
+    const formData = new URLSearchParams();
+    Object.entries(payload).forEach(([k, v]) => formData.append(k, v));
+
     try {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        mode:   'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    formData.toString()
       });
-      // no-cors means we can't read the response — assume success
       showSuccess(oficina, ofInput);
     } catch (err) {
       document.getElementById('loadingOverlay').classList.remove('show');
-      alert('Erro de conexão. Verifique sua internet e tente novamente.');
+      alert('Erro de conexao. Verifique sua internet e tente novamente.');
     }
   }
 
